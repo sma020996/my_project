@@ -34,7 +34,7 @@ jobs:
 
       # مرحله چهارم: آپلود EXE به عنوان artifact
       - name: Upload EXE as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2  # تغییر به نسخه v2
         with:
           name: compiled-exe
           path: '**/*.exe'
