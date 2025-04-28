@@ -1,0 +1,40 @@
+name: C/C++ Compilation and EXE Creation
+
+on:
+  push:
+    paths:
+      - '**/*.c'
+      - '**/*.cpp'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # یا هر سیستم عامل مورد نظر
+
+    steps:
+      # مرحله اول: بررسی کد از ریپوزیتوری
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # مرحله دوم: نصب ابزارهای C/C++ برای کامپایل
+      - name: Install build tools
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential
+
+      # مرحله سوم: کامپایل فایل‌های C/C++
+      - name: Compile C/C++ files
+        run: |
+          # بررسی فایل‌های C و C++ و کامپایل آن‌ها
+          for file in $(find . -name "*.c" -or -name "*.cpp"); do
+            # نام فایل اجرایی را به نام فایل اصلی بدون پسوند می‌دهیم
+            exe_file="${file%.*}"
+            echo "Compiling $file"
+            gcc -o "$exe_file" "$file" || g++ -o "$exe_file" "$file"
+          done
+
+      # مرحله چهارم: ارسال خروجی EXE به کاربر (در صورت نیاز)
+      - name: Upload EXE as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: compiled-exe
+          path: '**/*.exe'
