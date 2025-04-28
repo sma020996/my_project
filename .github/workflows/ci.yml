@@ -32,9 +32,9 @@ jobs:
             gcc -o "$exe_file" "$file" || g++ -o "$exe_file" "$file"
           done
 
-      # مرحله چهارم: ارسال خروجی EXE به کاربر (در صورت نیاز)
+      # مرحله چهارم: آپلود EXE به عنوان artifact
       - name: Upload EXE as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: compiled-exe
           path: '**/*.exe'
